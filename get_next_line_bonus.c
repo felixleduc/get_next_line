@@ -1,15 +1,15 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_next_line.c                                    :+:      :+:    :+:   */
+/*   get_next_line_bonus.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: fleduc <marvin@42quebec.com>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/04/27 12:40:41 by fleduc            #+#    #+#             */
-/*   Updated: 2022/04/28 11:15:39 by fleduc           ###   ########.fr       */
+/*   Created: 2022/04/28 11:15:16 by fleduc            #+#    #+#             */
+/*   Updated: 2022/04/28 13:16:55 by fleduc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-#include "get_next_line.h"
+#include "get_next_line_bonus.h"
 
 int	ft_sl(char *str)
 {
@@ -87,7 +87,7 @@ char	*ft_get_the_line(char *line, char *buffer)
 
 char	*get_next_line(int fd)
 {
-	static char	buffer[BUFFER_SIZE];
+	static char	buffer[OPEN_MAX][BUFFER_SIZE];
 	char		*line;
 	int			eof;
 	int			read_chars;
@@ -99,15 +99,15 @@ char	*get_next_line(int fd)
 	line = NULL;
 	while (eof)
 	{
-		if (!buffer[0])
-			read_chars = read(fd, buffer, BUFFER_SIZE);
-		if (ft_check_eof(buffer) && read_chars >= 1)
+		if (!buffer[fd][0])
+			read_chars = read(fd, buffer[fd], BUFFER_SIZE);
+		if (ft_check_eof(buffer[fd]) && read_chars >= 1)
 			eof = 1;
 		else
 			eof = 0;
 		if (read_chars >= 1)
-			line = ft_get_the_line(line, buffer);
-		ft_clean_buffer(buffer);
+			line = ft_get_the_line(line, buffer[fd]);
+		ft_clean_buffer(buffer[fd]);
 	}
 	return (line);
 }

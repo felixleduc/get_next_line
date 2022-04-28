@@ -1,32 +1,37 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_next_line.h                                    :+:      :+:    :+:   */
+/*   get_next_line_utils_bonus.c                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: fleduc <marvin@42quebec.com>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/04/06 16:21:39 by fleduc            #+#    #+#             */
-/*   Updated: 2022/04/28 11:12:23 by fleduc           ###   ########.fr       */
+/*   Created: 2022/04/28 11:13:53 by fleduc            #+#    #+#             */
+/*   Updated: 2022/04/28 11:14:02 by fleduc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-#ifndef GET_NEXT_LINE_H
-# define GET_NEXT_LINE_H
+#include "get_next_line_bonus.h"
 
-# ifndef BUFFER_SIZE
-#  define BUFFER_SIZE 5
-# endif
+void	ft_bzero(void *s, size_t n)
+{
+	size_t	i;
 
-# include <unistd.h>
-# include <stdlib.h>
+	i = 0;
+	if (n == 0)
+		return ;
+	while (i < n)
+	{
+		((char *)s)[i] = 0;
+		i++;
+	}
+}
 
-int		ft_sl(char *str);
-int		ft_check_eof(char *buffer);
+void	*ft_calloc(size_t count, size_t size)
+{
+	char	*buffer;
 
-char	*get_next_line(int fd);
-char	*ft_get_the_line(char *line, char *buffer);
-
-void	ft_bzero(void *s, size_t n);
-void	ft_clean_buffer(char *buffer);
-void	*ft_calloc(size_t count, size_t size);
-
-#endif
+	buffer = malloc(count * size);
+	if (buffer == NULL)
+		return (NULL);
+	ft_bzero(buffer, count * size);
+	return (buffer);
+}
